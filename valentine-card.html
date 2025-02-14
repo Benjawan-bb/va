@@ -7,98 +7,121 @@
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
+      font-family: 'Arial', sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      background-color: #fef2f2;
+      background-color: #f08080; /* สีพื้นหลังตามภาพ */
     }
+    
     .card-container {
       position: relative;
       width: 300px;
       height: 250px;
       cursor: pointer;
     }
-    .envelope {
-      position: absolute;
-      inset: 0;
-      background-color: #fff;
-      border-radius: 15px;
-      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
-      overflow: hidden;
-      transform-origin: top center;
-      transition: transform 1s ease;
-    }
-    .envelope:hover {
-      transform: scale(1.05);
-    }
+
     .letter {
       position: absolute;
-      left: 24px;
-      right: 24px;
-      bottom: 24px;
-      background-color: #fff;
-      padding: 16px;
-      border-radius: 8px;
-      box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+      width: 200px;
+      height: 120px;
+      background-color: #fff8f8;
+      padding: 15px;
+      border-radius: 5px;
       text-align: center;
-      transform: translateY(100%);
+      box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+      bottom: 50px;
+      left: 50%;
+      transform: translateX(-50%);
       opacity: 0;
-      transition: transform 1s ease, opacity 1s ease;
+      transition: transform 1s ease-out, opacity 1s ease-out;
+      z-index: 2;
     }
+
     .envelope.open .letter {
-      transform: translateY(-120%);
+      transform: translateX(-50%) translateY(-100%);
       opacity: 1;
     }
+
+    .envelope {
+      position: absolute;
+      width: 260px;
+      height: 180px;
+      background-color: white;
+      border-radius: 5px;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+      transition: 0.5s ease;
+    }
+
     .flap {
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
-      height: 60px;
+      height: 80px;
       background-color: #f9fafb;
       clip-path: polygon(0 0, 50% 100%, 100% 0);
-      border-bottom: 1px solid #e5e7eb;
-      transition: transform 1s ease;
+      transform-origin: top;
+      transition: transform 0.6s ease;
     }
+
     .envelope.open .flap {
       transform: rotateX(180deg);
     }
+
     .heart {
       position: absolute;
-      top: 50%;
+      bottom: 70px;
       left: 50%;
-      transform: translate(-50%, -50%);
-      width: 40px;
-      height: 40px;
+      width: 30px;
+      height: 30px;
       background-color: red;
-      transform: rotate(45deg);
+      transform: translateX(-50%) rotate(45deg);
+      z-index: 1;
     }
-    .heart:before, .heart:after {
+
+    .heart::before,
+    .heart::after {
       content: '';
       position: absolute;
-      width: 40px;
-      height: 40px;
+      width: 30px;
+      height: 30px;
       background-color: red;
       border-radius: 50%;
     }
-    .heart:before {
-      top: -20px;
+
+    .heart::before {
+      top: -15px;
       left: 0;
     }
-    .heart:after {
-      left: -20px;
+
+    .heart::after {
+      left: -15px;
       top: 0;
     }
+
+    .envelope.open .heart {
+      background-color: transparent;
+      box-shadow: none;
+    }
+
+    .envelope.open .heart::before,
+    .envelope.open .heart::after {
+      background-color: transparent;
+    }
+
     .message {
-      font-size: 20px;
+      font-size: 18px;
       color: #333;
       font-weight: 500;
-      margin-bottom: 10px;
     }
+
     .emoji {
-      font-size: 30px;
+      font-size: 24px;
       color: red;
     }
   </style>
@@ -106,25 +129,18 @@
 <body>
   <div class="card-container" onclick="toggleCard()">
     <div class="envelope" id="envelope">
-      <div class="letter" id="letter">
-        <p class="message">
-          Happy<br>Valentine's<br>Day!
-        </p>
-        <div class="emoji">❤️</div>
-      </div>
-      <div class="flap" id="flap"></div>
+      <div class="flap"></div>
       <div class="heart"></div>
+      <div class="letter">
+        <p class="message">Happy Valentine's Day ขอบคุณที่อยู่ข้างๆกันเสมอ เบสรักอาทนะ❤️</p>
+      </div>
     </div>
   </div>
 
   <script>
     function toggleCard() {
       const envelope = document.getElementById('envelope');
-      const letter = document.getElementById('letter');
-      const flap = document.getElementById('flap');
       envelope.classList.toggle('open');
-      letter.classList.toggle('open');
-      flap.classList.toggle('open');
     }
   </script>
 </body>
